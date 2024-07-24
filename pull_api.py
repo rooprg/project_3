@@ -42,7 +42,6 @@ for i in list2:
     tsunami=response3.json()
     tsunami_items += tsunami["items"]
 
-
 # Generating jsons
 with open("volcano.json", mode="w", encoding="utf-8") as write_file:
     json.dump(volcano, write_file)
