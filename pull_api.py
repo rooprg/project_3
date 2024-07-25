@@ -13,7 +13,6 @@ tsunami="/hazard-service/api/v1/tsunamis/events"
 query_url="?maxYear=2024&minYear=2000"
 
 # Create volcano json
-
 url=base_url+volcano+query_url
 response=requests.get(url)
 volcano=response.json()
@@ -44,10 +43,10 @@ for i in list2:
 
 # Generating jsons
 with open("volcano.json", mode="w", encoding="utf-8") as write_file:
-    json.dump(volcano, write_file)
+    json.dump(volcano["items"], write_file)
 
-with open("earthquake.json", mode="w", encoding="utf-8") as write_file:
-    json.dump(earthquake_items, write_file)
+# with open("earthquake.json", mode="w", encoding="utf-8") as write_file:
+#     json.dump(earthquake_items, write_file)
 
-with open("tsunami.json", mode="w", encoding="utf-8") as write_file:
-    json.dump(tsunami_items, write_file)
+# with open("tsunami.json", mode="w", encoding="utf-8") as write_file:
+#     json.dump(tsunami_items, write_file)
