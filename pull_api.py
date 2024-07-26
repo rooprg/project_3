@@ -45,8 +45,8 @@ for i in list2:
 with open("volcano.json", mode="w", encoding="utf-8") as write_file:
     json.dump(volcano["items"], write_file)
 
-# with open("earthquake.json", mode="w", encoding="utf-8") as write_file:
-#     json.dump(earthquake_items, write_file)
+with open("earthquake.json", mode="w", encoding="utf-8") as write_file:
+    json.dump(earthquake_items, write_file)
 
-# with open("tsunami.json", mode="w", encoding="utf-8") as write_file:
-#     json.dump(tsunami_items, write_file)
+with open("tsunami.json", mode="w", encoding="utf-8") as write_file:
+    json.dump(tsunami_items, write_file)
