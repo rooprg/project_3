@@ -1,155 +1,166 @@
 let map;
 
-// Initialize arrays to hold circle markers
-let quakeCircles = [];
-let tsunamiCircles = [];
-let volcanoCircles = [];
-
-function createMap(earthquake, tsunami, volcano) {
-
+function createMap(earthquakes, tsunamis, volcanos) {
     // Create the tile layer that will be the background of the map
     let streetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
-    
+
     // Create an object to hold the streetmap layer
     let baseMaps = {
         "Street Map": streetMap
     };
-    
+
     // Create an object to hold the earthquakes layer
     let quakeMaps = {
-        "Earthquakes": earthquake
+        "Earthquakes": earthquakes
     };
 
-    // Create an object to hold the tsunami layer
-    let tsuMaps = {
-        "Tsunamis": tsunami
+    // Create an object to hold the tsunamis layer
+    let tsunamiMaps = {
+        "Tsunamis": tsunamis
     };
 
-    // Create an object to hold the volcano layer
-    let volMaps = {
-        "Volcanos": volcano
+    // Create an object to hold the volcanos layer
+    let volcanoMaps = {
+        "Volcanos": volcanos
     };
-    
+
     // Create the map object
     map = L.map("map", {
-        center: [44.58, -103.46],
+        center: [0.00, 0.00],
         zoom: 5,
-        layers: [streetMap, quakeMaps, tsuMaps, volMaps]
+        layers: [streetMap, earthquakes, tsunamis, volcanos]
     });
-    
+
     // Create a layer control, and pass in baseMaps and overlayMaps. Add the layer control to the map.
-    L.control.layers(baseMaps, { ...quakeMaps, ...tsuMaps, ...volMaps }, {
+    // Add in tsunami and volcanos layer?
+    L.control.layers(baseMaps, quakeMaps, tsunamiMaps, volcanoMaps, {
         collapsed: false
     }).addTo(map);
 }
 
 // Create a function for the earthquakes
-function createQuakeCircles(response1) {
-    let features1 = response1;
+function createCircles(data) {
 
-    features1.forEach(feature => {
-        let year = feature.year;
-        let month = feature.month;
-        let day = feature.day;
-        let latitude = feature.latitude;
-        let longitude = feature.longitude;
-        let depth = feature.eqDepth;
-        let magnitude = feature.eqMagnitude;
-        let damage = feature.damageAmountOrderTotal;
-        let houses_destroyed = feature.housesDestroyedAmountOrderTotal;
-        let country = feature.country;
+    // Initialize an array to hold earthquakes
+    let quakeCircles = [];
 
-        // For each event, create a circle marker, plus bind a popup with name
+    // Loop through each earthquake data object
+    data.forEach(earthquake => {
+        // Extract earthquake details
+        let latitude = earthquake.latitude;
+        let longitude = earthquake.longitude;
+        let magnitude = earthquake.eqMagnitude;
+        let depth = earthquake.eqDepth;
+        let total_homes = earthquake.housesDestroyedAmountOrderTotal;
+        let damage = earthquake.damageAmountOrderTotal;
+        let country = earthquake.country;
+        let year = earthquake.year;
+        let month = earthquake.month;
+        let day = earthquake.day;
+
+        // For each earthquake, create a circle marker, plus bind a popup with name
         let quakeCircle = L.circleMarker([latitude, longitude], {
-            fillOpacity: 0.75,
-            color: "black",
-            fillColor: "orange"
-        }).bindPopup(`<h3>Country: ${country}</h3><h3>Magitude: ${magnitude}</h3><h3>Depth: ${depth}</h3><h3><h3>Latitude: ${latitude}</h3><h3>Longitude: ${longitude}</h3></h3><h3>Damage: ${damage}</h3></h3>
-            <h3>Houses Destroyed: ${houses_destroyed}</h3></h3><h3>Date: ${year}-${month}-${day}</h3>`);
+            color: 'navy',
+            fillColor: 'orange',
+            fillOpacity: 0.5
+        }).bindPopup(`<h3>Magnitude: ${magnitude}</h3><h3>Depth: ${depth}</h3><h3>Latitude: ${latitude}</h3><h3>Longitude: ${longitude}</h3><h3>Date: ${year}-${month}-${day}</h3>
+            <h3>Homes Destroyed: ${total_homes}</h3><h3>Damages: ${damage}</h3><h3>Country: ${country}</h3>`);
 
         // Add markers to quakeMarkers array
         quakeCircles.push(quakeCircle);
     });
+
+    // Create a layer group that's made from the new array, and pass it to the createMap function.
+    // createMap(L.layerGroup(quakeCircles));
+    return(L.layerGroup(quakeCircles));
 }
 
 // Create a function for the tsunamis
-function createTsunamiCircles(response2) {
-    let features2 = response2;
+function createTsunamiMarkers(data1) {
 
-    features2.forEach(feature => {
-        let year = feature.year;
-        let month = feature.month;
-        let day = feature.day;
-        let latitude = feature.latitude;
-        let longitude = feature.longitude;
-        let height = feature.maxWaterHeight;
-        let damage = feature.damageAmountOrderTotal;
-        let deaths = feature.deathsTotal;
-        let country = feature.country;
+    // Initialize an array to hold tsunamis
+    let tsunamiMarkers = [];
 
-        // For each event, create a circle marker, plus bind a popup with name
-        let tsunamiCircle = L.circleMarker([latitude, longitude], {
-            fillOpacity: 0.75,
-            color: "blue",
-            fillColor: "red"
-        }).bindPopup(`<h3>Country: ${country}</h3><h3>Height: ${height}</h3><h3>Latitude: ${latitude}</h3><h3>Longitude: ${longitude}</h3>
-            <h3>Damage: ${damage}</h3><h3>Total Deaths: ${deaths}</h3><h3>Date: ${year}-${month}-${day}</h3>`);
+    // Loop through each earthquake data object
+    data1.forEach(tsunami => {
+        // Extract earthquake details
+        let latitude = tsunami.latitude;
+        let longitude = tsunami.longitude;
+        let wave = tsunami.maxWaterHeight;
+        let deaths = tsunami.deathsTotal;
+        let damage = tsunami.damageAmountOrderTotal;
+        let country = tsunami.country;
+        let year = tsunami.year;
+        let month = tsunami.month;
+        let day = tsunami.day;
 
-        // Add markers to tsunamiCircles array
-        tsunamiCircles.push(tsunamiCircle);
+        // For each volcano, create a circle marker, plus bind a popup with name
+        let tsunamiMarker = L.marker([latitude, longitude], {
+            color: 'black',
+            fillColor: 'red',
+            fillOpacity: 0.5
+        }).bindPopup(`<h3>Wave Height: ${wave}</h3><h3><h3>Latitude: ${latitude}</h3><h3>Longitude: ${longitude}</h3><h3>Date: ${year}-${month}-${day}</h3>
+            <h3>Deaths: ${deaths}</h3><h3>Damages: ${damage}</h3><h3>Country: ${country}</h3>`);
+
+        // Add markers to quakeMarkers array
+        tsunamiMarkers.push(tsunamiMarker);
     });
+
+    // createMap(L.layerGroup(quakeCircles));
+    return(L.layerGroup(tsunamiMarkers));
 }
 
 // Create a function for the volcanos
-function createVolCircles(response3) {
-    let features3 = response3;
+function createVolcanoMarkers(data2) {
 
-    features3.forEach(feature => {
-        let year = feature.year;
-        let month = feature.month;
-        let day = feature.day;
-        let latitude = feature.latitude;
-        let longitude = feature.longitude;
-        let elevation = feature.elevation;
-        let vol_type = feature.morphology;
-        let deaths = feature.deathsTotal;
-        let country = feature.country;
+    // Initialize an array to hold volcanos
+    let volcanoMarkers = [];
 
-        // For each event, create a circle marker, plus bind a popup with name
-        let volcanoCircle = L.circleMarker([latitude, longitude], {
-            fillOpacity: 0.75,
-            color: "white",
-            fillColor: "purple"
-        }).bindPopup(`<h3>Country: ${country}</h3><h3>Elevation: ${elevation}</h3><h3>Latitude: ${latitude}</h3><h3>Longitude: ${longitude}</h3><h3>Type: ${vol_type}</h3><h3>Total Deaths: ${deaths}</h3><h3>Date: ${year}-${month}-${day}</h3>`);
+    // Loop through each volcano data object
+    data2.forEach(volcano => {
+        // Extract volcano details
+        let latitude = volcano.latitude;
+        let longitude = volcano.longitude;
+        let elevation = volcano.elevation;
+        let type = volcano.morphology;
+        let deaths = volcano.deathsTotal;
+        let damage = volcano.damageAmountOrderTotal;
+        let country = volcano.country;
+        let year = volcano.year;
+        let month = volcano.month;
+        let day = volcano.day;
 
-        // Add markers to volcanoCircles array
-        volcanoCircles.push(volcanoCircle);
+        // For each volcano, create a circle marker, plus bind a popup with name
+        let volcanoMarker = L.marker([latitude, longitude], {
+            color: 'white',
+            fillColor: 'yellow',
+            fillOpacity: 0.5
+        }).bindPopup(`<h3>Type: ${type}</h3><h3>Elevation: ${elevation}</h3><h3>Latitude: ${latitude}</h3><h3>Longitude: ${longitude}</h3><h3>Date: ${year}-${month}-${day}</h3>
+            <h3>Deaths: ${deaths}</h3><h3>Damages: ${damage}</h3><h3>Country: ${country}</h3>`);
+
+        // Add markers to quakeMarkers array
+        volcanoMarkers.push(volcanoMarker);
     });
+    
+    // createMap(L.layerGroup(quakeCircles));
+    return(L.layerGroup(volcanoMarkers));
 }
 
+// Retrieve earthquake data
+// d3.json("/Datasets/cleaned_earthquake.json").then(createCircles);
 
-// Create layer groups from the arrays
-let quakeLayerGroup = L.layerGroup(quakeCircles);
-let tsunamiLayerGroup = L.layerGroup(tsunamiCircles);
-let volcanoLayerGroup = L.layerGroup(volcanoCircles);
+// Retrieve tsunami data
+//d3.json("/Datasets/cleaned_tsunami.json").then(createTsunamiMarkers);
+
+// Retrieve volcano data
+// d3.json("/Datasets/cleaned_volcano.json").then(createVolcanoMarkers);
 
 // Retrieve data
-// d3.json("../Datasets/cleaned_earthquake.json")
-// .then(earthquake => d3.json("../Datasets/cleaned_tsunami.json"))
-// .then(tsunami => d3.json("../Datasets/cleaned_volcano.json"))
+// d3.json("/Datasets/cleaned_earthquake.json")
+// .then(earthquake => d3.json("/Datasets/cleaned_tsunami.json"))
+// .then(tsunami => d3.json("/Datasets/cleaned_volcano.json"))
 // .then(volcano => createMap(earthquake, tsunami, volcano));
 
-
-
-d3.json("../Datasets/cleaned_earthquake.json").then(function(earthquake){
-    let earthquake_data= createQuakeCircles(earthquake);
-    d3.json("../Datasets/cleaned_tsunami.json").then(function(tsunami){
-        let tsunami_data = createTsunamiCircles(tsunami);
-        d3.json("../Datasets/cleaned_volcano.json").then(function(volcano){
-            let volcano_data = createVolCircles(volcano)
-            createMap(earthquake_data, tsunami_data, volcano_data);
-        })
-    })
-})
+createMap(d3.json("/Datasets/cleaned_earthquake.json").then(createCircles),d3.json("/Datasets/cleaned_tsunami.json").then(createTsunamiMarkers), d3.json("/Datasets/cleaned_volcano.json").then(createVolcanoMarkers))
