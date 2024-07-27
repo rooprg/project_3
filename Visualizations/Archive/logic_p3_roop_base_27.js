@@ -17,7 +17,17 @@ function createMap(earthquakes, volcanos) {
         "Volcanos": volcanos,
 };
 
-    // Create the map object and include layers
+//     // Create an object to hold the volcanos layer
+//     let volcanoMaps = {
+//         "Volcanos": volcanos
+// };
+
+//     // Create an object to hold the tsunamis layer
+//     let tsunamiMaps = {
+//         "Tsunamis": tsunamis
+// };
+
+    // Create the map object and include both earthquake and volcano layers
 map = L.map("map", {
     center: [0.00, 0.00],
     zoom: 5,
@@ -32,8 +42,9 @@ map = L.map("map", {
 }).addTo(map);
 }
 
-// Create a function to handle GeoJSON data
+// Create a function to handle the earthquake GeoJSON data
 function createCircles([data,data2]) {
+    console.log(data, data2)
     // Initialize an array to hold earthquake markers
     let earthquakeMarkers = [];
 
@@ -54,12 +65,10 @@ function createCircles([data,data2]) {
 
         // Create a circle marker for each earthquake
         let earthquakeMarker = L.circleMarker([latitude, longitude], {
-            color: 'orange',
-            fillColor: 'red',
-            fillOpacity: 0.5,
-            radius: Math.sqrt(feature.properties.eqMagnitude) * 4
-        }).bindPopup(`<h1>Location: ${location}</h1><h3>Magnitude: ${magnitude}</h3><h3>Depth: ${depth}</h3><h3>Latitude: ${latitude}</h3>
-            <h3>Longitude: ${longitude}</h3><h3>Date: ${year}-${month}-${day}</h3>
+            color: 'navy',
+            fillColor: 'orange',
+            fillOpacity: 0.5
+        }).bindPopup(`<h1>Location: ${location}</h1><h3>Magnitude: ${magnitude}</h3><h3>Depth: ${depth}</h3><h3>Latitude: ${latitude}</h3><h3>Longitude: ${longitude}</h3><h3>Date: ${year}-${month}-${day}</h3>
             <h3>Homes Destroyed: ${total_homes}</h3><h3>Damages: ${damage}</h3><h3>Country: ${country}</h3>`);
 
         // Add the marker to the earthquakeMarkers array
@@ -68,6 +77,8 @@ function createCircles([data,data2]) {
 
 // Initialize an array to hold volcano markers
 let volcanoMarkers = [];
+
+    // d3.json("/Datasets/cleaned_volcano_geo.json").then(function(data2) {
 
     // Loop through each volcano data object
     data2.features.forEach(feature => {
@@ -88,15 +99,14 @@ let volcanoMarkers = [];
         let volcanoMarker = L.circleMarker([latitude, longitude], {
             color: 'white',
             fillColor: 'blue',
-            fillOpacity: 0.5,
-            radius: Math.log(feature.properties.elevation) * 2
-        }).bindPopup(`<h1>Location: ${location}</h1><h3>Type: ${type}</h3><h3>Elevation: ${elevation}</h3><h3>Latitude: ${latitude}</h3>
-            <h3>Longitude: ${longitude}</h3><h3>Date: ${year}-${month}-${day}</h3><h3>Houses Damaged: ${houses_damaged}</h3><h3>Damages: ${damage}</h3><h3>Country: ${country}</h3>`);
+            fillOpacity: 0.5
+        }).bindPopup(`<h1>Location: ${location}</h1><h3>Type: ${type}</h3><h3>Elevation: ${elevation}</h3><h3>Latitude: ${latitude}</h3><h3>Longitude: ${longitude}</h3><h3>Date: ${year}-${month}-${day}</h3><h3>Houses Damaged: ${houses_damaged}</h3><h3>Damages: ${damage}</h3><h3>Country: ${country}</h3>`);
 
         // Add markers to the volcanoMarkers array
         volcanoMarkers.push(volcanoMarker);
-    })
 
+    })
+// })
 
 createMap(L.layerGroup(earthquakeMarkers),L.layerGroup(volcanoMarkers));
 }
