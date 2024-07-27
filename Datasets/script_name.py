@@ -19,8 +19,8 @@ geojson = {
             "coordinates": [d["longitude"], d["latitude"]],
             },
         "properties" : d,
-     } for d in data]
-     # if lat or long or both, skip record
+    } for d in data]
+    #if lat or long or both, skip record
 }
 
 
