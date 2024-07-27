@@ -1,9 +1,9 @@
-//import Chart from 'chart.js/auto'
+// Create list of years to use in chart
 let year=[]
 for (let i=2000; i<2025; i++) {
     year.push(i);
 }
-
+// Create footer for labels for each column of the bar chart
 const footer = (tooltipItems)=>{
     let total=0;
     tooltipItems.forEach(function(tooltipItem){
@@ -11,13 +11,14 @@ const footer = (tooltipItems)=>{
     });
     return 'Total: '+total;
 };
-
+// Function to create the chart
 function renderChart(data1, data2, data3, labels){
     var ctx = document.getElementById("myChart").getContext("2d");
     var myChart = new Chart(ctx, {
         type: "bar",
         data: {
             labels: labels,
+            //Add in datasets containing mapped data to get deathTotal
             datasets: [{
                 label: 'Earthquakes',
                 barThickness:10,
@@ -55,6 +56,7 @@ function renderChart(data1, data2, data3, labels){
                     stacked: true
                 },
                 y:{
+                    //Set max size of y-axis to 1500
                     stacked: true,
                     max: 1500
                 }
@@ -63,10 +65,9 @@ function renderChart(data1, data2, data3, labels){
         }
     });
 }
-//console.log(getChartData("Datasets/cleaned_earthquake.json"))
-$.when($.ajax("Datasets/cleaned_earthquake.json"), $.ajax("Datasets/cleaned_volcanos.json"), $.ajax("Datasets/cleaned_tsunami.json")).done(function(response1, response2, response3){
+//Function to run $.ajax functions for each json file, then run renderChart using the returned data
+$.when($.ajax("/Datasets/cleaned_earthquake.json"), $.ajax("/Datasets/cleaned_volcanos.json"), $.ajax("/Datasets/cleaned_tsunami.json")).done(function(response1, response2, response3){
     renderChart(response1, response2, response3, year)
-    //console.log(response1[0].map(x=>x.deathsTotal))
     
 })
 
