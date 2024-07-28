@@ -21,6 +21,7 @@ function createMap(earthquakes) {
     // Create the map object and include layers
 map = L.map("map", {
     center: [0.00, 0.00],
+
     zoom: 3,
     // Add volcanos?
     layers: [streetMap, earthquakes]
@@ -41,17 +42,13 @@ function createCircles([data]) {
 // Loop through each feature in the GeoJSON data
 data.features.forEach(feature => {
     // Extract earthquake details from the propertie
+    let location = feature.properties.locationName;
     let latitude = feature.geometry.coordinates[1];
     let longitude = feature.geometry.coordinates[0];
     let magnitude = feature.properties.eqMagnitude;
     let depth = feature.properties.eqDepth;
-    let total_homes = feature.properties.housesDestroyedAmountOrderTotal;
-    let location = feature.properties.locationName;
-    let damage = feature.properties.damageAmountOrderTotal;
-    let country = feature.properties.country;
     let year = feature.properties.year;
-    let month = feature.properties.month;
-    let day = feature.properties.day;
+
 
 // Create a circle marker for each earthquake (Roof)
 let earthquakeMarker = L.circleMarker([latitude, longitude], {
@@ -60,8 +57,7 @@ let earthquakeMarker = L.circleMarker([latitude, longitude], {
     fillOpacity: 0.5,
     radius: Math.sqrt(feature.properties.eqMagnitude) * 4
 }).bindPopup(`<h1>Location: ${location}</h1><h3>Magnitude: ${magnitude}</h3><h3>Depth: ${depth}</h3><h3>Latitude: ${latitude}</h3>
-    <h3>Longitude: ${longitude}</h3><h3>Date: ${year}-${month}-${day}</h3>
-    <h3>Homes Destroyed: ${total_homes}</h3><h3>Damages: ${damage}</h3><h3>Country: ${country}</h3>`);
+    <h3>Longitude: ${longitude}</h3><h3>Year: ${year}</h3>`);
 
 
 // Add the marker to the earthquakeMarkers array
@@ -72,6 +68,9 @@ let earthquakeMarker = L.circleMarker([latitude, longitude], {
 
 createMap(L.layerGroup(earthquakeMarkers));
 }
+
+
+
 
 // // Retrieve earthquake data
 // // d3.json("/Datasets/cleaned_earthquake_geo.json").then(createCircles);

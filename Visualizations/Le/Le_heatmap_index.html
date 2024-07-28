@@ -1,46 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Leaflet.heat demo</title>
-   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <title>Leaflet Heat Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        #map { width: 800px; height: 600px; }
-        body { font: 16px/1.4 "Helvetica Neue", Arial, sans-serif; }
-        .ghbtns { position: relative; top: 4px; margin-left: 5px; }
-        a { color: #0077ff; }
+        #map {
+            height: 650px;
+        }
     </style>
 </head>
 <body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+    <script>
+        let myMap = L.map("map", {
+            center: [42.3601, -71.0589],
+            zoom: 10
+        });
 
-<p>
-    A 10,000-point demo of <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat</a>, a tiny and fast Leaflet heatmap plugin.
-    <iframe class="ghbtns" src="http://ghbtns.com/github-btn.html?user=Leaflet&amp;repo=Leaflet.heat&amp;type=watch&amp;count=true"
-  allowtransparency="true" frameborder="0" scrolling="0" width="90" height="20"></iframe>
-</p>
+        // Add a tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(myMap);
 
-<div id="map"></div>
+        // Call data
+        d3.json("Le_cleaned_earthquake.json").then(function (data) {
+            console.log("Data loaded:", data);
 
-<!-- <script src="../node_modules/simpleheat/simpleheat.js"></script>
-<script src="../src/HeatLayer.js"></script> -->
+            // Prepare heat map data
+            let heatData = data.map(function (Le_cleaned_earthquake) {
+                return [Le_cleaned_earthquake.latitude, Le_cleaned_earthquake.longitude];
+            });
 
-<script src="/Visualization/Le_leaflet-heat.js"></script>
-
-<script src="http://leaflet.github.io/Leaflet.markercluster/example/realworld.10000.js"></script>
-<script>
-
-var map = L.map('map').setView([-37.87, 175.475], 12);
-
-var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
-
-addressPoints = addressPoints.map(function (p) { return [p[0], p[1]]; });
-
-var heat = L.heatLayer(addressPoints).addTo(map);
-
-</script>
+            // Create heat map layer
+            L.heatLayer(heatData, {
+                radius: 25,  // Adjust the radius as needed
+                blur: 15,    // Adjust the blur intensity as needed
+                maxZoom: 17, // Adjust the max zoom level as needed
+            }).addTo(myMap);
+        }).catch(function(error) {
+            console.error("Error loading the data:", error);
+        });
+    </script>
 </body>
 </html>
