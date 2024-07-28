@@ -137,8 +137,8 @@ createMap(L.layerGroup(earthquakeMarkers),L.layerGroup(volcanoMarkers),L.layerGr
 // Retrieve earthquake data
 // d3.json("/Datasets/cleaned_earthquake_geo.json").then(createCircles);
 Promise.all([
-    d3.json('/Datasets/cleaned_earthquake_geo.json'),
-    d3.json('/Datasets/cleaned_volcano_geo.json'),
-    d3.json('/Datasets/cleaned_tsunami_geo.json')
+    d3.json('../Datasets/cleaned_earthquake_geo.json'),
+    d3.json('../Datasets/cleaned_volcano_geo.json'),
+    d3.json('../Datasets/cleaned_tsunami_geo.json')
 
 ]).then(createCircles)
