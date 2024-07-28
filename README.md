@@ -1,4 +1,3 @@
-# project_3
 # Project 3 Data Visualization
 Our project wanted to look at data from natural disasters in the 21st Century and see where they are happening, their frequency, and the loss of life over time.  This data could be used to analyze if efforts to reduce the damage of natural disasters over time have been successful.
 # Instructions
