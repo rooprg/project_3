@@ -12,7 +12,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Function to process CSV data for Earthquake
-function processCSV(data) {
+function processEarthquakeCSV(data) {
     var heatData2000 = [];
     var heatData2010 = [];
     var heatData2020 = [];
@@ -35,17 +35,17 @@ function processCSV(data) {
     });
     
     // Create a heatmap layer with the processed data
-    var heat2000 = L.heatLayer(heatData2000, {
+    var heat2000 = L.heatLayer(e_heatData2000, {
         radius: 25,
         blur: 15,
         maxZoom: 17
     }).addTo(map);
-    var heat2010 = L.heatLayer(heatData2010, {
+    var heat2010 = L.heatLayer(e_heatData2010, {
         radius: 25,
         blur: 15,
         maxZoom: 17
     }).addTo(map);
-    var heat2020 = L.heatLayer(heatData2020, {
+    var heat2020 = L.heatLayer(e_heatData2020, {
         radius: 25,
         blur: 15,
         maxZoom: 17
@@ -63,14 +63,14 @@ Papa.parse("Earthquake.csv", {
     download: true, // Set to true to fetch the file from a URL
     header: true,   // Set to true if your CSV file has headers
     complete: function(results) {
-        processCSV(results.data);
+        processEarthquakeCSV(results.data);
     },
     error: function(error) {
         console.error('Error fetching CSV data:', error);
     }
 });
 // Function to process CSV data for Tusnami
-function processCSV(data) {
+function processTsunamiCSV(data) {
     var heatData2000 = [];
     var heatData2010 = [];
     var heatData2020 = [];
@@ -121,7 +121,7 @@ Papa.parse("Tsunami.csv", {
     download: true, // Set to true to fetch the file from a URL
     header: true,   // Set to true if your CSV file has headers
     complete: function(results) {
-        processCSV(results.data);
+        processTsunamiCSV(results.data);
     },
     error: function(error) {
         console.error('Error fetching CSV data:', error);
@@ -129,7 +129,7 @@ Papa.parse("Tsunami.csv", {
 });
 
 // Function to process CSV data for Volcano
-function processCSV(data) {
+function processVolcanoCSV(data) {
     var heatData2000 = [];
     var heatData2010 = [];
     var heatData2020 = [];
@@ -180,7 +180,7 @@ Papa.parse("Volcano.csv", {
     download: true, // Set to true to fetch the file from a URL
     header: true,   // Set to true if your CSV file has headers
     complete: function(results) {
-        processCSV(results.data);
+        processVolcanoCSV(results.data);
     },
     error: function(error) {
         console.error('Error fetching CSV data:', error);
