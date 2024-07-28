@@ -1,5 +1,5 @@
 # project_3
-Project 3 Data Visualization
+# Project 3 Data Visualization
 Our project wanted to look at data from natural disasters in the 21st Century and see where they are happening, their frequency, and the loss of life over time.  This data could be used to analyze if efforts to reduce the damage of natural disasters over time have been successful.
 # Instructions
 In order to view the stacked bar chart showing deaths by each disaster each year of the 21st Century, you will run the 'index_christian.html' file.  This will load a bar chart, and you can hover over each year to see the distribution of deaths between earthquakes, tsunamis, and volcanos and the total deaths in each year.  The max of the chart was cut off at 1500 because there are two outliers, 2015 and 2024, that made the chart unwieldy if left unedited.  The earthquakes deaths are in green, tsunamis in blue, and volcano in red.
