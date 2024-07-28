@@ -1,50 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Leaflet Heat Map</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-        #map {
-            height: 650px;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <title>Water Hydrants in Western Australia</title>
+    
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    
+        <!-- Leaflet JavaScript code -->
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+        <!-- Leaflet heatmap plugin-->
+        <script type="text/javascript" src="Le_leaflet-heat.js"></script>
+    
+        <!-- D3 library -->
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+        <!-- Our CSS  -->
+        <link rel="stylesheet" href="Style_Le.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+        
+
     </style>
 </head>
 <body>
-    <div id="map"></div>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-    <script>
-        let myMap = L.map("map", {
-            center: [42.3601, -71.0589],
-            zoom: 10
-        });
-
-        // Add a tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(myMap);
-
-        // Call data
-        d3.json("Le_cleaned_earthquake.json").then(function (data) {
-            console.log("Data loaded:", data);
-
-            // Prepare heat map data
-            let heatData = data.map(function (Le_cleaned_earthquake) {
-                return [Le_cleaned_earthquake.latitude, Le_cleaned_earthquake.longitude];
-            });
-
-            // Create heat map layer
-            L.heatLayer(heatData, {
-                radius: 25,  // Adjust the radius as needed
-                blur: 15,    // Adjust the blur intensity as needed
-                maxZoom: 17, // Adjust the max zoom level as needed
-            }).addTo(myMap);
-        }).catch(function(error) {
-            console.error("Error loading the data:", error);
-        });
-    </script>
+    <div id="map"><canvas id="myCanvas"></canvas></div>
+    
+    <script type="text/javascript" src="Le_heatmap.js"></script>
+      
 </body>
 </html>
