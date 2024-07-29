@@ -15,8 +15,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 function processEarthquakeCSV(data) {
     var heatData2000 = [];
     var heatData2010 = [];
-    var heatData2020 = []
-// Loop through each row in the CSV
+    var heatData2020 = [];
+    
+    // Loop through each row in the CSV
     data.forEach(row => {
         // Assuming the CSV has columns 'latitude' and 'longitude'
         var lat = parseFloat(row.Latitude);
@@ -37,16 +38,19 @@ function processEarthquakeCSV(data) {
     var heat2000 = L.heatLayer(heatData2000, {
         radius: 25,
         blur: 15,
+        gradient: {1: 'red'},
         maxZoom: 17
     }).addTo(map);
     var heat2010 = L.heatLayer(heatData2010, {
         radius: 25,
         blur: 15,
+        gradient: {1: 'red'},
         maxZoom: 17
     }).addTo(map);
     var heat2020 = L.heatLayer(heatData2020, {
         radius: 25,
         blur: 15,
+        gradient: {1: 'red'},
         maxZoom: 17
     }).addTo(map);
     var overlayMaps ={
@@ -99,18 +103,22 @@ function processTsunamiCSV(data){
     // Create a heatmap layer with the processed data
     var heat2000 = L.heatLayer(heatData2000, {
         radius: 25,
-        blur: 15,
-        maxZoom: 17
+        blur: 1,
+        gradient: {0.1: 'blue', 0.1: 'cyan', 0.1: 'lime', 0.05: 'yellow', 1.0:'red'},
+        maxZoom: 10
     }).addTo(map);
     var heat2010 = L.heatLayer(heatData2010, {
         radius: 25,
-        blur: 15,
-        maxZoom: 17
+        blur: 1,
+        gradient: {0.1: 'blue', 0.1: 'cyan', 0.1: 'lime', 0.05: 'yellow', 1.0:'red'},
+    
+        maxZoom: 10
     }).addTo(map);
     var heat2020 = L.heatLayer(heatData2020, {
         radius: 25,
-        blur: 15,
-        maxZoom: 17
+        blur: 1,
+        gradient: {0.1: 'blue', 0.1: 'cyan', 0.1: 'lime', 0.05: 'yellow', 1.0:'red'},
+        maxZoom: 10
     }).addTo(map);
     var overlayMaps = {
         'Tsunami 2000s': heat2000,
