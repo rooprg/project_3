@@ -1,5 +1,5 @@
 # Project 3 Data Visualization
-Our project wanted to look at data from natural disasters in the 21st Century and see where they are happening, their frequency, and the loss of life over time.  This data could be used to analyze if efforts to reduce the damage of natural disasters over time have been successful.
+Our project is designed to look at data from natural disasters in the 21st Century and see where they are happening, their frequency, and the loss of life over time.  This data could be used to analyze if efforts to reduce the damage of natural disasters over time have been successful. We wanted to learn which disasters are more frequency; most catastrophic to life; etc.  We used data from the US National Oceanic and Atmospheric Administration via their National Centers for Environmental Information website.
 
 
 # Instructions
@@ -11,7 +11,7 @@ To view the heatmap showing the population affected by each disaster for each de
 
 
 # Ethical Considerations
-We used data from the National Geophysical Data Center / World Data Service (NGDC/WDS): NCEI/WDS Global Significant Volcanic Eruptions Database. NOAA National Centers for Environmental Information, and we give them credit in the Data Sources section of the Readme.  We tried to account for bias by including data from the entire world.  There is no private data in our datasets, so we avoid concerns with data privacy violations.  
+We used data from the National Geophysical Data Center / World Data Service (NGDC/WDS): NCEI/WDS Global Significant Volcanic Eruptions Database. NOAA National Centers for Environmental Information, and we give them credit in the Data Sources section of the Readme.  We tried to account for bias by including data from the entire world.  There is no private data in our datasets, so we avoid concerns with data privacy violations.  If data used was from other sources, there may be other ethical considerations and potential regulatory concerns about the usage of data in terms of retention; processing; and security of data extracted from an available source like a website.
 
 
 # Data Sources
