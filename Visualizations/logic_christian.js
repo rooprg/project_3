@@ -49,6 +49,15 @@ function renderChart(data1, data2, data3, labels){
                         footer: footer,
                     }
                 },
+                title: {
+                    display: true,
+                    text: 'Death Toll by Natural Disasters from 2000 to 2024',
+                    fullSize: true,
+                    font: {
+                        size: 24,
+                        weight: 1
+                    }
+                }
             },
             responsive: true,
             scales:{
