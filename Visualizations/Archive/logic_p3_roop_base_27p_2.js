@@ -31,30 +31,6 @@ map = L.map("map", {
     L.control.layers(baseMaps, quakeMaps, {
     collapsed: false
 }).addTo(map);
-
-// Configure the legend
-let legend = L.control({ position: "bottomright" });
-legend.onAdd = function() {
-    let div = L.DomUtil.create("div", "info legend");
-    let legendLimits = ['Earthquakes', 'Tsunamis', 'Volcanos'];
-    let legendColors = ["red", "pink", "blue", ];
-    let labels = [];
-    
-    // Add the minimum and maximum.
-    let legendInfo = "<h3>Disaster Type</h3>"
-
-    div.innerHTML = legendInfo;
-
-    legendLimits.forEach(function(legendLimit, index) {
-        labels.push("<li style=\"background-color: " + legendColors[index] + "\">" + legendLimit + "</li>");
-    });
-
-    div.innerHTML += "<ul>" + labels.join("") + "</ul>";
-    return div;
-  };
-
-// Adding the legend to the map
-legend.addTo(map);
 }
 
 // Create a function to handle GeoJSON data
