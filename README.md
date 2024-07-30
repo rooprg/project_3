@@ -20,6 +20,8 @@ National Geophysical Data Center / World Data Service (NGDC/WDS): NCEI/WDS Globa
 # Code Assistance
 In the file 'logic_christian.js', a large amount of the code was adapted from code in the documentation for Chart.js.  Assistance was received from the TA's on how to use .ajax to run the json files that allowed me to create the chart.  Stack Overflow was also referenced to help map the data I needed to display.
 
+The code for the script_name.py file was mainly from stack overflow because we didn't know how to convert a JSON file to a geoJSON file.  Also, the cleaned_tsunami_geo.json file was cleaned manually to remove incomplete entries, as some tsunami events were missing latitude and longitude values.
+
 Assistance was received for the logic_p3_roop from the class instructors; a tutoring session on 26-Jul-2024; and the Xpert Learning Assistant.
 
 The Le_heatmap.js was came out successfully by assitance from groupmates, and the Xpert Learning Assistant, also Stack Overflow
