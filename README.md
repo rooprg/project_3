@@ -24,7 +24,7 @@ The code for the script_name.py file was mainly from stack overflow because we d
 
 Assistance was received for the logic_p3_roop from the class instructors; a tutoring session on 26-Jul-2024; and the Xpert Learning Assistant.
 
-The Le_heatmap.js was came out successfully by assitance from groupmates, and the Xpert Learning Assistant, also Stack Overflow
+Le_heatmap.js was successfully completed with assistance from groupmates, the Xpert Learning Assistant, and Stack Overflow. The CSV files for Earthquake, Tsunami, and Volcano were cleaned manually to provide a simple dataset while coding Le_heatmap.js.
 
 
 
